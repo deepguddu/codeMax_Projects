@@ -1,0 +1,15 @@
+<?php
+class get_db_connect{
+	
+	function connect() {
+        $con = mysqli_connect("localhost","root","","codemax");
+        if (!$con) {
+            die('Could not connect to database!');
+        } else {
+            $this->myconn = $con;
+            //echo 'Connection established!';
+		}
+			return $this->myconn;
+    }
+}
+?>
