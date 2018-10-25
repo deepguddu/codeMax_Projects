@@ -1,0 +1,184 @@
+<?php //include('config.php');
+class commanFunction extends get_db_connect {
+	
+	public  function insert_data($table,$value) {
+		
+		$getconnection = $this->connect();
+		
+
+		$insert = "INSERT INTO
+					".$table."
+				SET
+					".$value;
+		//echo $insert;exit;
+		if(mysqli_query($getconnection,$insert)){
+			return "inserted";
+		}else{
+			return "not inserted";
+		}
+		
+	}
+	
+	
+	public  function update_data($table,$value,$con = "") {
+		
+		$getconnection = $this->connect();
+		
+		$insert = "UPDATE
+				".$table."
+			SET
+				".$value."
+			".$con;
+
+		//echo $insert;	
+			
+		if(mysqli_query($getconnection,$insert)){
+			return "updated";
+		}else{
+			return "not updated";
+		}
+		
+	}
+	
+	public  function delete_data($table,$con = "") {
+		
+		$getconnection = $this->connect();
+		
+		$delete = "DELETE
+				FROM
+					".$table."
+					".$con;
+
+		//echo $delete;
+		if(mysqli_query($getconnection,$delete)){
+			return "deleted";
+		}else{
+			return "not deleted";
+		}
+		
+	}
+	
+	public  function select_singlerow($table, $field, $con = "") {
+		
+		$getconnection = $this->connect();
+		
+		$sqlselect = mysqli_query($getconnection,"SELECT
+				".$field."
+			FROM
+				".$table."
+			".$con);
+
+		/*echo "SELECT
+				".$field."
+			FROM
+				".$table."
+			".$con;*/
+			
+		if(mysqli_num_rows($sqlselect) > 0){
+			$datarow = mysqli_fetch_assoc($sqlselect);
+			return $datarow;
+		}else{
+			return 0;
+		}
+		
+	}
+	
+	public function get_row_count($table, $field, $con = "") {
+		
+		$getconnection = $this->connect();
+		
+		$sqlselect = mysqli_query($getconnection,"SELECT
+				".$field."
+			FROM
+				".$table."
+			".$con);
+		
+		if(mysqli_num_rows($sqlselect) > 0){
+			$getrow = mysqli_fetch_assoc($sqlselect);
+			return $getrow['totalcount'];
+		}else{
+			return 0;
+		}
+	
+	}
+	public  function select_multiplerow($table, $field, $con = "") {
+		
+		$getconnection = $this->connect();
+		
+		$sqlselect = mysqli_query($getconnection,"SELECT
+				".$field."
+			FROM
+				".$table."
+			".$con);
+			
+		
+		if(mysqli_num_rows($sqlselect) > 0){
+			while($row = mysqli_fetch_assoc($sqlselect)){
+				$datarow[] = $row;
+			}
+			return $datarow;
+		}else{
+			return 0;
+		}
+		
+	}
+	
+	
+	public  function send_mail($toemail,$mailsubject,$mailbody,$mailheaders,$fromemail) {
+		
+				
+		$to = $toemail;
+		$subject = $mailsubject;
+		$txt = $mailbody;
+		$headers  	=	"From: $fromemail "."\r\n";
+		$headers 	.=	"MIME-Version: 1.0"."\r\n";
+		$headers 	.=	"Content-Type: text/html";
+		
+		if(mail($to,$subject,$txt,$headers)){
+			return 'sent';
+		}else{
+			return 'not sent';
+		}
+	}
+	
+	public function br2nl( $input ) {
+		return preg_replace('/<br\s?\/?>/ius', "\n", str_replace("\n","",str_replace("\r","", htmlspecialchars_decode($input))));
+	}
+	
+	public function validate_phone_number($phone)
+    {
+         // Allow +, - and . in phone number
+         $filtered_phone_number = filter_var($phone, FILTER_SANITIZE_NUMBER_INT);
+         // Remove "-" from number
+         $phone_to_check = str_replace("-", "", $filtered_phone_number);
+         // Check the lenght of number
+         // This can be customized if you want phone number from a specific country
+         if (strlen($phone_to_check) < 10 || strlen($phone_to_check) > 14) {
+            return false;
+         } else {
+           return true;
+         }
+    }
+	
+	public  function insert_id_data($table,$value) {
+		
+		$getconnection = $this->connect();
+
+		$insert = "INSERT INTO
+					".$table."
+				SET
+					".$value;
+		//echo $insert;exit;
+		if(mysqli_query($getconnection,$insert)){
+			
+			$get = mysqli_insert_id($getconnection);
+			return $get;
+		}else{
+			return "not inserted";
+		}
+		
+	}
+	
+}
+
+?>
