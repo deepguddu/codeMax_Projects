@@ -20,20 +20,23 @@ $row_modal	=	$confunc->select_multiplerow($table, $field, $con); ?>
 				</tr>
 			</thead>
 			<tbody>
-				<?php $i=1; foreach($row_modal as $rowval){
-					
-					$getcount 	=	$confunc->get_row_count('cd_modal','COUNT(modal_name) as totalcount','WHERE modal_name = "'.$rowval['modal_name'].'" AND status = "available" GROUP BY modal_name');
-					$modalname	=	"'".trim($rowval['modal_name'])."'";
-					$jqeryevent	=	'onclick="view_all_data('.$modalname.','.$rowval['manufacturer_id'].');"';
-					
-					echo '<tr class="odd gradeX">
-						<td>'.$i.'</td>
-						<td>'.$rowval['manufacturer_name'].'</td>
-						<td>'.$rowval['modal_name'].'</td>
-						<td class="center">'.$getcount.'</td>
-						<td class="center"><a href="Javascript:;" '.$jqeryevent.' ><i class="fa fa-eye"></i></a></td>
-					</tr>';
-					$i++;
+				<?php $i=1;
+				if(is_array($row_modal)){
+					foreach($row_modal as $rowval){
+						
+						$getcount 	=	$confunc->get_row_count('cd_modal','COUNT(modal_name) as totalcount','WHERE modal_name = "'.$rowval['modal_name'].'" AND status = "available" GROUP BY modal_name');
+						$modalname	=	"'".trim($rowval['modal_name'])."'";
+						$jqeryevent	=	'onclick="view_all_data('.$modalname.','.$rowval['manufacturer_id'].');"';
+						
+						echo '<tr class="odd gradeX">
+							<td>'.$i.'</td>
+							<td>'.$rowval['manufacturer_name'].'</td>
+							<td>'.$rowval['modal_name'].'</td>
+							<td class="center">'.$getcount.'</td>
+							<td class="center"><a href="Javascript:;" '.$jqeryevent.' ><i class="fa fa-eye"></i></a></td>
+						</tr>';
+						$i++;
+					}
 				}?>
 			</tbody>
 	</table>
@@ -116,4 +119,3 @@ function Modal_Status(mid,mname){
 
 </script>
 <?php include('footer.php');?>
-                
