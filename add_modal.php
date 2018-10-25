@@ -8,6 +8,9 @@ $msg = "";
 
 if(isset($_POST['submit'])){
 	
+	
+	
+	
 	$table_name	=	"cd_modal";
 	$table_value=	"manufacturer_id	=	'".$_POST['manufacturer_id']."',
 					modal_name			=	'".$_POST['modal_name']."',
@@ -33,7 +36,7 @@ if(isset($_POST['submit'])){
 			$insert_query = $confunc->insert_data($table_img, $img_value);
 		}
 	
-		$msg = '<div class="alert alert-success">Modal added successfully.'.$insert_query.'</div>';	
+		$msg = '<div class="alert alert-success">Modal added successfully.</div>';	
 	}else{
 		$msg = '<div class="alert alert-danger">There is an error.</div>';
 	}
@@ -70,7 +73,7 @@ $get_manufacturer = $confunc->select_multiplerow($mtable, $mfield, $mcon);
 			</div>
 			<div class="col-sm-6">
 				<label for="productname" class="loginFormElement">Modal Name:</label>
-				<input type="text" name="modal_name" value="" class="form-control" />
+				<input type="text" name="modal_name" value="" class="form-control" required />
 			</div>
 		</div>
 	</div>
@@ -78,11 +81,11 @@ $get_manufacturer = $confunc->select_multiplerow($mtable, $mfield, $mcon);
 		<div class="row">
 			<div class="col-sm-6">
 				<label for="productname" class="loginFormElement">Color:</label>
-				<input type="text" name="modal_color" value="" class="form-control" />
+				<input type="text" name="modal_color" value="" class="form-control" required />
 			</div>
 			<div class="col-sm-6">
 				<label for="productname" class="loginFormElement">Manufacturing Year:</label>
-				<input type="text" name="manufacturing_year" value="" class="form-control" />
+				<input type="text" name="manufacturing_year" value="" class="form-control" max="4" onkeypress="return isNumber(event)" />
 			</div>
 		</div>
 	</div>
@@ -94,7 +97,7 @@ $get_manufacturer = $confunc->select_multiplerow($mtable, $mfield, $mcon);
 			</div>
 			<div class="col-sm-6">
 				<label for="productname" class="loginFormElement">Registration Number:</label>
-				<input type="text" name="registration_number" value="" class="form-control" />
+				<input type="text" name="registration_number" value="" class="form-control" required />
 			</div>
 		</div>
 	</div>
@@ -102,7 +105,7 @@ $get_manufacturer = $confunc->select_multiplerow($mtable, $mfield, $mcon);
 		<div class="row">
 			<div class="col-sm-6">
 				<label for="productname" class="loginFormElement">Upload Picture:</label>
-				<input type="file" name="picture[]" id="upload_picture" value="" class="form-control" />
+				<input type="file" name="picture[]" id="upload_picture" value="" class="form-control" required />
 				<div id="image_preview"></div>
 				<div id="getmessage">
 					<h4 id="loading">loading..</h4><div id="message"></div>
