@@ -65,8 +65,10 @@ $get_manufacturer = $confunc->select_multiplerow($mtable, $mfield, $mcon);
 				<label for="productname" class="loginFormElement">Manufacturer:</label>
 				<?php $html = '<select name="manufacturer_id" class="form-control">
 				<option value="">Select Manufacturer</option>';
-				foreach($get_manufacturer as $manfacturerVal){
-					$html .= '<option value="'.$manfacturerVal['manufacturerId'].'">'.$manfacturerVal['manufacturer_name'].'</option>';
+				if(is_array($get_manufacturer)){
+					foreach($get_manufacturer as $manfacturerVal){
+						$html .= '<option value="'.$manfacturerVal['manufacturerId'].'">'.$manfacturerVal['manufacturer_name'].'</option>';
+					}
 				}
 				$html .= '</select>';
 				echo $html;?>
